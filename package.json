@@ -1,0 +1,17 @@
+{
+  "name": "com.packagetest.urprenderpass",
+  "displayName": "URPRenderPass",
+  "description": "Test of URPRenderPass",
+  "version": "1.0.0",
+  "unity": "2021.1",
+  "license": "MIT",
+  "keywords": [
+    "Unity",
+    "URP",
+    "Shader"
+  ],
+  "author": {
+    "name": "GTuanTuan"
+  },
+  "hideInEditor": false
+}
