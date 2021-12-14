@@ -13,5 +13,12 @@
   "author": {
     "name": "GTuanTuan"
   },
-  "hideInEditor": false
+  "hideInEditor": false,
+  "samples": [
+    {
+      "displayName": "Outline",
+      "description": "Stroke example",
+      "path": "Samples~/Outline"
+    }
+  ]
 }
