@@ -6,9 +6,9 @@
   "unity": "2021.1",
   "license": "MIT",
   "keywords": [
-    "Unity",
-    "URP",
-    "Shader"
+    "unity",
+    "urp",
+    "shader"
   ],
   "author": {
     "name": "GTuanTuan"
@@ -19,6 +19,11 @@
       "displayName": "Outline",
       "description": "Stroke example",
       "path": "Samples~/Outline"
+    },
+    {
+      "displayName": "FogWithDepth",
+      "description": "Stroke example",
+      "path": "Samples~/FogWithDepth"
     }
   ]
 }
