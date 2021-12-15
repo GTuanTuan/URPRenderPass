@@ -24,6 +24,11 @@
       "displayName": "FogWithDepth",
       "description": "Stroke example",
       "path": "Samples~/FogWithDepth"
+    },
+    {
+      "displayName": "Scanning",
+      "description": "Stroke example",
+      "path": "Samples~/Scanning"
     }
   ]
 }

@@ -1,0 +1,202 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5049895787809748960
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74507b5c98fb4f64c94e7ee0d0ab88ee, type: 3}
+  m_Name: OutlineVolume
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  Open:
+    m_OverrideState: 1
+    m_Value: 1
+  scanWidth:
+    m_OverrideState: 0
+    m_Value: 0.2
+  scanColor:
+    m_OverrideState: 0
+    m_Value: {r: 0, g: 0, b: 1, a: 1}
+    hdr: 1
+    showAlpha: 0
+    showEyeDropper: 0
+  scanDir:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 0, z: 0}
+  outlineMinOffset:
+    m_OverrideState: 0
+    m_Value: 0.1
+  edgeColor:
+    m_OverrideState: 0
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
+  sampleDistance:
+    m_OverrideState: 0
+    m_Value: 1
+  depth:
+    m_OverrideState: 0
+    m_Value: 1
+  normal:
+    m_OverrideState: 0
+    m_Value: 1
+  _WorldPosScale:
+    m_OverrideState: 0
+    m_Value: 1
+  _TimeScale:
+    m_OverrideState: 0
+    m_Value: 1
+  _AbsOffset:
+    m_OverrideState: 0
+    m_Value: 1
+  _PowScale:
+    m_OverrideState: 0
+    m_Value: 1
+  _SaturateScale:
+    m_OverrideState: 0
+    m_Value: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
+  m_Name: Global Volume Profile
+  m_EditorClassIdentifier: 
+  components:
+  - {fileID: 5886642830050208722}
+--- !u!114 &4380547080052281712
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74507b5c98fb4f64c94e7ee0d0ab88ee, type: 3}
+  m_Name: OutlineVolume
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  Open:
+    m_OverrideState: 1
+    m_Value: 1
+  scanWidth:
+    m_OverrideState: 0
+    m_Value: 0.2
+  scanColor:
+    m_OverrideState: 0
+    m_Value: {r: 0, g: 0, b: 1, a: 1}
+    hdr: 1
+    showAlpha: 0
+    showEyeDropper: 0
+  scanDir:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 0, z: 0}
+  outlineMinOffset:
+    m_OverrideState: 0
+    m_Value: 0.1
+  edgeColor:
+    m_OverrideState: 0
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
+  sampleDistance:
+    m_OverrideState: 0
+    m_Value: 1
+  depth:
+    m_OverrideState: 0
+    m_Value: 1
+  normal:
+    m_OverrideState: 0
+    m_Value: 1
+  _WorldPosScale:
+    m_OverrideState: 0
+    m_Value: 1
+  _TimeScale:
+    m_OverrideState: 0
+    m_Value: 1
+  _AbsOffset:
+    m_OverrideState: 0
+    m_Value: 1
+  _PowScale:
+    m_OverrideState: 0
+    m_Value: 1
+  _SaturateScale:
+    m_OverrideState: 0
+    m_Value: 1
+--- !u!114 &5886642830050208722
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74507b5c98fb4f64c94e7ee0d0ab88ee, type: 3}
+  m_Name: ScanningVolume
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  Open:
+    m_OverrideState: 1
+    m_Value: 1
+  scanWidth:
+    m_OverrideState: 1
+    m_Value: 1
+  scanColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    hdr: 1
+    showAlpha: 0
+    showEyeDropper: 0
+  scanDir:
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 0, z: 0}
+  outlineMinOffset:
+    m_OverrideState: 1
+    m_Value: 1
+  edgeColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
+  sampleDistance:
+    m_OverrideState: 1
+    m_Value: 1
+  depth:
+    m_OverrideState: 1
+    m_Value: 1
+  normal:
+    m_OverrideState: 1
+    m_Value: 1
+  _WorldPosScale:
+    m_OverrideState: 1
+    m_Value: 0.02
+  _TimeScale:
+    m_OverrideState: 1
+    m_Value: -1
+  _AbsOffset:
+    m_OverrideState: 1
+    m_Value: 1
+  _PowScale:
+    m_OverrideState: 1
+    m_Value: 5
+  _SaturateScale:
+    m_OverrideState: 1
+    m_Value: 2
