@@ -119,6 +119,7 @@ Shader "Custom/ClickScanning"
 
         return scan *_ScanColor * dc + baseColor*(1-scan*dc);
         //return  input.ray;
+        //return half4(worldPos, 1);
     }
 
     ENDHLSL
