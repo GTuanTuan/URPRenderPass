@@ -12,8 +12,11 @@ Shader "Custom/#CUSTOMNAME#"
 
     TEXTURE2D(_SourceTex);
     SAMPLER(sampler_SourceTex);
+
+    CBUFFER_START(UnityPerMaterial)
     float4 _SourceTex_TexelSize;
     float4 _SourceTex_ST;
+    CBUFFER_END
 
     struct appdata
     {

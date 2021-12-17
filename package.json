@@ -29,6 +29,11 @@
       "displayName": "Scanning",
       "description": "Stroke example",
       "path": "Samples~/Scanning"
+    },
+    {
+      "displayName": "ClickScanning",
+      "description": "Stroke example",
+      "path": "Samples~/ClickScanning"
     }
   ]
 }
