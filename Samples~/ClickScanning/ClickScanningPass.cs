@@ -37,7 +37,6 @@ public class ClickScanningPass : ScriptableRenderPass
         this.dest = dest;
         temp.Init("_Temp");
         renderPassEvent = settings.Event;
-        forTest = GameObject.Find("Camera").GetComponent<ClickScanningTest>();
     }
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
     {
@@ -47,21 +46,12 @@ public class ClickScanningPass : ScriptableRenderPass
         if (volume == null) return;
         if (!volume.IsActive()) { return; }
 
+        if (!GameObject.Find("Camera")) { return; }
+        forTest = GameObject.Find("Camera").GetComponent<ClickScanningTest>();
+        if (!forTest) { return; }
+
         if (forTest.Clicked)
         {
-            //if (!setTimer)
-            //{
-            //    Timer = Time.time;
-            //    setTimer = true;
-            //}
-            //if (setTimer)
-            //{
-            //    if (Time.time - Timer > 5)
-            //    {
-            //        forTest.Clicked = false;
-            //        setTimer = false;
-            //    }
-            //}
             forTest.Timer += Time.fixedDeltaTime/2;
             //Debug.Log(forTest.Timer);
 

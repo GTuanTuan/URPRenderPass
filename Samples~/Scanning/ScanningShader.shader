@@ -62,7 +62,7 @@ Shader "Custom/ScaningShader"
             offsetN += normal[0] - SampleSceneNormals(uv[i + 1]);
         }
         int isSameD = saturate(abs(offsetD)) < _MinOffset;
-        int isSameN = saturate(abs(offsetN.x + offsetN.y)) < half2(_MinOffset, _MinOffset);
+        int isSameN = saturate(abs(offsetN.x + offsetN.y)) < length(half2(_MinOffset, _MinOffset));
         return isSameD * isSameN ? 0 : 1;
     }
 
