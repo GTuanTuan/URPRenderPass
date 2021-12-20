@@ -112,12 +112,13 @@ Shader "Custom/ClickScanning"
         float x = length(worldPos - _ClickPos);
         float y = _Timer * _Speed;
 
+        //half4 scan = frac(saturate(x - y));
         half4 scan = pow(frac(saturate((x - y) / _Width)), _Focus);
-        //half4 scan = saturate(pow(frac(((-_Timer * _Speed+length(worldPos- _ClickPos))/ _Width)), _Focus))* _ScanColor;
 
         half4 baseColor = SAMPLE_TEXTURE2D(_SourceTex, sampler_SourceTex, uv);
 
         return scan *_ScanColor * dc + baseColor*(1-scan*dc);
+        //return scan;
         //return  input.ray;
         //return half4(worldPos, 1);
     }
