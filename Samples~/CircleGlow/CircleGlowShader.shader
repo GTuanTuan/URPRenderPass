@@ -1,5 +1,6 @@
-Shader "Custom/#CUSTOMNAME#"
+Shader "Custom/CircleGlow"
 {
+
     HLSLINCLUDE
 
     #pragma exclude_renderers gles gles3 glcore
@@ -17,10 +18,41 @@ Shader "Custom/#CUSTOMNAME#"
     SAMPLER(sampler_SourceTex);
     float4 _SourceTex_TexelSize;
     float4 _SourceTex_ST;
+    float _RCount;
+    float _Radius;
+    float _CCount;
+    float _Speed;
 
     CBUFFER_START(UnityPerMaterial)
 
     CBUFFER_END
+
+    float4 GetCircle(float t,float2 uv) {
+        float2 p = 2 * _ScreenParams.xy * uv - _ScreenParams.xy;
+        p = cos(t) * p + sin(t) * float2(p.y, -p.x);
+        float wDelta = _ScreenParams.x / _RCount;
+        float hDelta = _ScreenParams.y / _CCount;
+        float2 pDelta = float2(wDelta, hDelta);
+        if (fmod(floor(p.y / hDelta + 0.5), 2) == 0) {
+            p.x += wDelta * 0.5;
+        }
+        float2 pTemp = p + 0.5 * pDelta;
+        float2 p2 = pTemp - pDelta * floor(pTemp / pDelta) - 0.5 * pDelta;
+        //p2 = cos(t) * p2 + sin(t) * float2(p2.y, -p2.x);
+
+        float2 cell = floor(p / pDelta + 0.5);
+        float cellR = frac(sin(dot(cell.xy, float2(12.9898, 78.233))) * 43758.5453);
+
+        float3 c = float3(0.4, 0.1, 0.2);
+        c *= frac(cellR * 3.33 + 3.33);
+
+        float radius = lerp(_Radius-50, _Radius+50, cellR);
+
+        float sdf = (length(p2 / radius) - 1) * radius;
+        float circle = 1.0 - smoothstep(0.0, 1.0, sdf * 0.04);
+        float glow = exp(-sdf * 0.025) * 0.3 * (1.0 - circle);
+        return (circle+ glow)*half4(cellR, cellR, cellR, 1);
+    }
 
     struct appdata
     {
@@ -59,7 +91,16 @@ Shader "Custom/#CUSTOMNAME#"
 
         float2 uv = UnityStereoTransformScreenSpaceTex(input.uv);
         half4 baseColor = SAMPLE_TEXTURE2D(_SourceTex, sampler_SourceTex, uv);
-        return baseColor;
+
+        half4 bgColor = lerp(half4(0.3, 0.1, 0.3, 1), half4(0.1, 0.4, 0.5, 1), uv.y);
+
+        float4 color1 = GetCircle(_Time.x* _Speed,uv+0.1);
+        float4 color2 = GetCircle(-_Time.x* _Speed,uv-0.1);
+        float4 color3 = GetCircle(_Time.x* _Speed,uv+0.2);
+
+        half4 color = baseColor+bgColor + color1 + color2 + color3;
+
+        return color;
     }
 
     ENDHLSL

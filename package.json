@@ -34,6 +34,11 @@
       "displayName": "ClickScanning",
       "description": "Stroke example",
       "path": "Samples~/ClickScanning"
+    },
+    {
+      "displayName": "CircleGlow",
+      "description": "Stroke example",
+      "path": "Samples~/CircleGlow"
     }
   ]
 }
