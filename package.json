@@ -2,7 +2,7 @@
   "name": "com.packagetest.urprenderpass",
   "displayName": "URPRenderPass",
   "description": "Test of URPRenderPass",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "unity": "2021.1",
   "license": "MIT",
   "keywords": [
