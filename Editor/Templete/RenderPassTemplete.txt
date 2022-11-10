@@ -25,6 +25,7 @@ public class #CUSTOMNAME#Pass : ScriptableRenderPass
     }
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
     {
+        if (renderingData.cameraData.isSceneViewCamera) return;
         if (!renderingData.postProcessingEnabled) { return; }
         var stack = VolumeManager.instance.stack;
         volume = stack.GetComponent<#CUSTOMNAME#Volume>();
@@ -32,23 +33,24 @@ public class #CUSTOMNAME#Pass : ScriptableRenderPass
         if (!volume.IsActive()) {  return; }
 
         CommandBuffer cmd = CommandBufferPool.Get(passName);
-        RenderTextureDescriptor descriptor = renderingData.cameraData.cameraTargetDescriptor;
-        descriptor.depthBufferBits = 0;
-        descriptor.colorFormat = RenderTextureFormat.ARGB32;
-        cmd.GetTemporaryRT(temp.id, descriptor);
-        cmd.GetTemporaryRT(dest.id, descriptor);
+        //RenderTextureDescriptor descriptor = renderingData.cameraData.cameraTargetDescriptor;
+        //descriptor.depthBufferBits = 0;
+        //descriptor.colorFormat = RenderTextureFormat.ARGB32;
+        //cmd.GetTemporaryRT(temp.id, descriptor);
+        //cmd.GetTemporaryRT(dest.id, descriptor);
         //cmd.SetGlobalTexture(mainTexID, source);
 
-        if (dest == RenderTargetHandle.CameraTarget)
-        {
-
-        }
-        else
-        {
-            cmd.Blit(source, dest.Identifier(), settings.mat);
-        }
-        cmd.ReleaseTemporaryRT(temp.id);
-        cmd.ReleaseTemporaryRT(dest.id);
+        //if (dest == RenderTargetHandle.CameraTarget)
+        //{
+        //
+        //}
+        //else
+        //{
+        //    cmd.Blit(source, dest.Identifier(), settings.mat);
+        //}
+        //cmd.ReleaseTemporaryRT(temp.id);
+        //cmd.ReleaseTemporaryRT(dest.id);
+        cmd.Blit(source, dest.Identifier(), settings.mat);
         context.ExecuteCommandBuffer(cmd);
         CommandBufferPool.Release(cmd);
     }
