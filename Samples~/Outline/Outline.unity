@@ -162,7 +162,7 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   m_VolumeTrigger: {fileID: 0}
   m_RenderPostProcessing: 1
   m_Antialiasing: 1
@@ -249,7 +249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 711325409}
   - component: {fileID: 711325408}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Global Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 1135931663}
   - component: {fileID: 1135931662}
   - component: {fileID: 1135931661}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

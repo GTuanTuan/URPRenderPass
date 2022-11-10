@@ -21,7 +21,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value:
       serializedVersion: 2
-      m_Bits: 8
+      m_Bits: 1
   baseColor:
     m_OverrideState: 1
     m_Value: {r: 0, g: 0.87080383, b: 1, a: 1}
