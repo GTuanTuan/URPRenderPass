@@ -39,6 +39,11 @@
       "displayName": "CircleGlow",
       "description": "Stroke example",
       "path": "Samples~/CircleGlow"
+    },
+    {
+      "displayName": "RayMarching",
+      "description": "Stroke example",
+      "path": "Samples~/RayMarching"
     }
   ]
 }
