@@ -13,17 +13,19 @@ public class FogWithDepthFeature : ScriptableRendererFeature
         public Shader shader = null;
     }
     public Settings settings;
+    RenderTargetHandle m_CameraColorAttachment;
     FogWithDepthPass pass;
     public override void AddRenderPasses( ScriptableRenderer renderer, ref RenderingData renderingData)
     {
         settings.mat = new Material(settings.shader);
         settings.mat.hideFlags = HideFlags.DontSave;
-        pass.SetUp(settings,"FogWithDepth", renderer.cameraColorTarget,RenderTargetHandle.CameraTarget);
+        pass.SetUp(settings,"FogWithDepth", renderer.cameraColorTarget, m_CameraColorAttachment);
         renderer.EnqueuePass(pass);
     }
 
     public override void Create()
     {
         pass = new FogWithDepthPass();
+        m_CameraColorAttachment.Init("_CameraColorTexture");
     }
 }

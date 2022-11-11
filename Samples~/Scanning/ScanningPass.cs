@@ -12,9 +12,7 @@ public class ScanningPass : ScriptableRenderPass
 
     RenderTargetIdentifier source;
     RenderTargetHandle dest;
-    RenderTargetHandle temp;
 
-    int mainTexID = Shader.PropertyToID("_MainTex");
     int scanWidthID = Shader.PropertyToID("_ScanWidth");
     int scanColorID = Shader.PropertyToID("_ScanColor");
     int scanDirID = Shader.PropertyToID("_ScanDir");
@@ -37,13 +35,11 @@ public class ScanningPass : ScriptableRenderPass
         this.passName = passName;
         this.source = source;
         this.dest = dest;
-        temp.Init("_Temp");
         renderPassEvent = settings.Event;
-
-        //Camera.main.depthTextureMode |= DepthTextureMode.Depth;
     }
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
     {
+        if (renderingData.cameraData.isSceneViewCamera) return;
         if (!renderingData.postProcessingEnabled) { return; }
         var stack = VolumeManager.instance.stack;
         volume = stack.GetComponent<ScanningVolume>();
@@ -52,38 +48,8 @@ public class ScanningPass : ScriptableRenderPass
 
         CommandBuffer cmd = CommandBufferPool.Get(passName);
 
-        Matrix4x4 Ray = Matrix4x4.identity;
+        Matrix4x4 Ray = E.URP.RenderMathhelp.InterpolatedRay(renderingData.cameraData.camera);
 
-        Camera camera = renderingData.cameraData.camera;
-
-        float near = camera.nearClipPlane;
-        float fov = camera.fieldOfView;
-
-        Vector3 up = camera.transform.up;
-        Vector3 forward = camera.transform.forward;
-        Vector3 right = camera.transform.right;
-
-        float halfH = near * Mathf.Tan(fov * 0.5f * Mathf.Deg2Rad);
-        float halfW = halfH * camera.aspect;
-
-        Vector3 TL = forward * near + up * halfH - right * halfW;
-        Vector3 TR = forward * near + up * halfH + right * halfW;
-        Vector3 BL = forward * near - up * halfH - right * halfW;
-        Vector3 BR = forward * near - up * halfH + right * halfW;
-
-        float scale = TL.magnitude / near;
-
-        TL = TL.normalized * scale;
-        TR = TR.normalized * scale;
-        BL = BL.normalized * scale;
-        BR = BR.normalized * scale;
-
-        Ray.SetRow(0, TL);
-        Ray.SetRow(1, TR);
-        Ray.SetRow(2, BL);
-        Ray.SetRow(3, BR);
-
-        cmd.SetGlobalTexture(mainTexID, source);
         cmd.SetGlobalFloat(scanWidthID, volume.scanWidth.value);
         cmd.SetGlobalVector(scanDirID, volume.scanDir.value);
         cmd.SetGlobalColor(scanColorID, volume.scanColor.value);
@@ -99,17 +65,7 @@ public class ScanningPass : ScriptableRenderPass
         cmd.SetGlobalFloat(_PowScale, volume._PowScale.value);
         cmd.SetGlobalFloat(_SaturateScale, volume._SaturateScale.value);
 
-        if (dest == RenderTargetHandle.CameraTarget)
-        {
-            cmd.GetTemporaryRT(temp.id, renderingData.cameraData.cameraTargetDescriptor, FilterMode.Bilinear);
-            cmd.Blit(source, temp.Identifier(), settings.mat);
-            cmd.Blit(temp.Identifier(), source);
-            cmd.ReleaseTemporaryRT(temp.id);
-        }
-        else
-        {
-            cmd.Blit(source, dest.Identifier(), settings.mat);
-        }
+        cmd.Blit(source, dest.Identifier(), settings.mat);
 
         context.ExecuteCommandBuffer(cmd);
         CommandBufferPool.Release(cmd);

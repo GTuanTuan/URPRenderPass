@@ -178,7 +178,7 @@ MonoBehaviour:
     showEyeDropper: 1
   sampleDistance:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 10
   depth:
     m_OverrideState: 1
     m_Value: 1

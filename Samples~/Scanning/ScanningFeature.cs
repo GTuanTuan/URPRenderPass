@@ -13,17 +13,19 @@ public class ScanningFeature : ScriptableRendererFeature
         public Shader shader = null;
     }
     public Settings settings;
+    RenderTargetHandle m_CameraColorAttachment;
     ScanningPass pass;
     public override void AddRenderPasses( ScriptableRenderer renderer, ref RenderingData renderingData)
     {
         settings.mat = new Material(settings.shader);
         settings.mat.hideFlags = HideFlags.DontSave;
-        pass.SetUp(settings,"Scanning", renderer.cameraColorTarget, RenderTargetHandle.CameraTarget);
+        pass.SetUp(settings,"Scanning", renderer.cameraColorTarget, m_CameraColorAttachment);
         renderer.EnqueuePass(pass);
     }
 
     public override void Create()
     {
         pass = new ScanningPass();
+        m_CameraColorAttachment.Init("_CameraColorTexture");
     }
 }

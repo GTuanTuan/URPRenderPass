@@ -1,5 +1,9 @@
 Shader "Custom/RayMarching"
 {
+    Properties
+    {
+        _MainTex("_MainTex", 2D) = "white" {}
+    }
     HLSLINCLUDE
 
     #pragma exclude_renderers gles gles3 glcore
@@ -14,10 +18,10 @@ Shader "Custom/RayMarching"
     #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
     #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
-    TEXTURE2D(_SourceTex);
-    SAMPLER(sampler_SourceTex);
-    float4 _SourceTex_TexelSize;
-    float4 _SourceTex_ST;
+    TEXTURE2D(_MainTex);
+    SAMPLER(sampler_MainTex);
+    float4 _MainTex_TexelSize;
+    float4 _MainTex_ST;
 
     CBUFFER_START(UnityPerMaterial)
 
@@ -69,7 +73,7 @@ Shader "Custom/RayMarching"
 
     float3 render(float3 ro,float3 rd,float2 uv)
     {
-        half4 baseColor = SAMPLE_TEXTURE2D(_SourceTex, sampler_SourceTex, uv);
+        half4 baseColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv);
         float dist = raymarching(ro,rd);
         if(dist>=1000) return float3(baseColor.rgb);
         float3 p = ro+rd*dist;
@@ -101,7 +105,7 @@ Shader "Custom/RayMarching"
 
         VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
         output.vertex = vertexInput.positionCS;
-        output.uv = TRANSFORM_TEX(input.texcoord, _SourceTex);
+        output.uv = TRANSFORM_TEX(input.texcoord, _MainTex);
          
         return output;
     }

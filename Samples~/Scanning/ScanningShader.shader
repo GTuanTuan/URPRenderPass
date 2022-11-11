@@ -1,14 +1,18 @@
 Shader "Custom/ScaningShader"
 {
+    Properties
+    {
+        _MainTex("_MainTex", 2D) = "white" {}
+    }
     HLSLINCLUDE
-#pragma multi_compile_instancing  
-#pragma multi_compile _ DOTS_INSTANCING_ON
+    #pragma multi_compile_instancing  
+    #pragma multi_compile _ DOTS_INSTANCING_ON
 
-#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
-#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareNormalsTexture.hlsl"
+    #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
+    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareNormalsTexture.hlsl"
 
     half4 _MainTex_ST;
     half4 _MainTex_TexelSize;

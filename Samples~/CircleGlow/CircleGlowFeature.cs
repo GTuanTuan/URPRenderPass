@@ -13,17 +13,19 @@ public class CircleGlowFeature : ScriptableRendererFeature
         public Shader shader = null;
     }
     public Settings settings;
+    RenderTargetHandle m_CameraColorAttachment;
     CircleGlowPass pass;
     public override void AddRenderPasses( ScriptableRenderer renderer, ref RenderingData renderingData)
     {
         settings.mat = new Material(settings.shader);
         settings.mat.hideFlags = HideFlags.DontSave;
-        pass.SetUp(settings,"CircleGlow", renderer.cameraColorTarget,RenderTargetHandle.CameraTarget);
+        pass.SetUp(settings, "CircleGlow", renderer.cameraColorTarget, m_CameraColorAttachment);
         renderer.EnqueuePass(pass);
     }
 
     public override void Create()
     {
         pass = new CircleGlowPass();
+        m_CameraColorAttachment.Init("_CameraColorTexture");
     }
 }

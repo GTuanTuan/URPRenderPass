@@ -13,10 +13,8 @@ public class ClickScanningPass : ScriptableRenderPass
 
     RenderTargetIdentifier source;
     RenderTargetHandle dest;
-    RenderTargetHandle temp;
 
     int rayID = Shader.PropertyToID("_Ray");
-    int sourceTexID = Shader.PropertyToID("_SourceTex");
     int clickPosID = Shader.PropertyToID("_ClickPos");
     int widthID = Shader.PropertyToID("_Width");
     int speedID = Shader.PropertyToID("_Speed");
@@ -26,8 +24,6 @@ public class ClickScanningPass : ScriptableRenderPass
     int timerID = Shader.PropertyToID("_Timer");
 
     ClickScanningTest forTest;
-    bool setTimer;
-    float Timer;
 
     public void SetUp(ClickScanningFeature.Settings settings, string passName, RenderTargetIdentifier source, RenderTargetHandle dest)
     {
@@ -35,11 +31,11 @@ public class ClickScanningPass : ScriptableRenderPass
         this.passName = passName;
         this.source = source;
         this.dest = dest;
-        temp.Init("_Temp");
         renderPassEvent = settings.Event;
     }
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
     {
+        if (renderingData.cameraData.isSceneViewCamera) return;
         if (!renderingData.postProcessingEnabled) { return; }
         var stack = VolumeManager.instance.stack;
         volume = stack.GetComponent<ClickScanningVolume>();
@@ -53,20 +49,12 @@ public class ClickScanningPass : ScriptableRenderPass
         if (forTest.Clicked)
         {
             forTest.Timer += Time.fixedDeltaTime/2;
-            //Debug.Log(forTest.Timer);
 
             CommandBuffer cmd = CommandBufferPool.Get(passName);
 
             Camera camera = renderingData.cameraData.camera;
             Matrix4x4 Ray = E.URP.RenderMathhelp.InterpolatedRay(camera);
 
-            RenderTextureDescriptor descriptor = renderingData.cameraData.cameraTargetDescriptor;
-            descriptor.depthBufferBits = 0;
-            descriptor.colorFormat = RenderTextureFormat.ARGB32;
-            cmd.GetTemporaryRT(temp.id, descriptor);
-            cmd.GetTemporaryRT(dest.id, descriptor);
-            //cmd.SetGlobalTexture(mainTexID, source);
-            cmd.SetGlobalTexture(sourceTexID, source);
             cmd.SetGlobalMatrix(rayID, Ray);
             cmd.SetGlobalVector(clickPosID, forTest.ClickPos);
             cmd.SetGlobalFloat(widthID, volume.width.value);
@@ -76,17 +64,8 @@ public class ClickScanningPass : ScriptableRenderPass
             cmd.SetGlobalColor(scanColorID, volume.scanColor.value);
             cmd.SetGlobalColor(outlineColorID, volume.outlineColor.value);
 
-            if (dest == RenderTargetHandle.CameraTarget)
-            {
-                cmd.Blit(source, temp.Identifier(), settings.mat);
-                cmd.Blit(temp.Identifier(), source);
-            }
-            else
-            {
-                cmd.Blit(source, dest.Identifier(), settings.mat);
-            }
-            cmd.ReleaseTemporaryRT(temp.id);
-            cmd.ReleaseTemporaryRT(dest.id);
+            cmd.Blit(source, dest.Identifier(), settings.mat);
+
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
         }

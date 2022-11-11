@@ -1,15 +1,15 @@
 Shader "Custom/Outline"
 {
     HLSLINCLUDE
-#pragma multi_compile_instancing
-#pragma multi_compile _ DOTS_INSTANCING_ON
+    #pragma multi_compile_instancing
+    #pragma multi_compile _ DOTS_INSTANCING_ON
 
-#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-#include "Packages/com.unity.render-pipelines.universal/Shaders/PostProcessing/Common.hlsl"
-#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+    #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+    #include "Packages/com.unity.render-pipelines.universal/Shaders/PostProcessing/Common.hlsl"
+    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
 
-        struct PureAttributes
+    struct PureAttributes
     {
         float4 positionOS       : POSITION;
         UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -19,7 +19,7 @@ Shader "Custom/Outline"
     {
         float4 vertex : SV_POSITION;
         UNITY_VERTEX_INPUT_INSTANCE_ID
-            UNITY_VERTEX_OUTPUT_STEREO
+        UNITY_VERTEX_OUTPUT_STEREO
     };
 
 
@@ -78,7 +78,7 @@ Shader "Custom/Outline"
         UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
         return _BaseColor;
     }
-        half4 fragHard(Varyings input) : SV_Target
+    half4 fragHard(Varyings input) : SV_Target
     {
         UNITY_SETUP_INSTANCE_ID(input);
         UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
@@ -86,7 +86,7 @@ Shader "Custom/Outline"
         bool isBorder = CheckSame(uv, _SampleProps.z);
         return isBorder ? _BaseColor : 0;
     }
-        half4 fragFinal(Varyings input) : SV_Target
+    half4 fragFinal(Varyings input) : SV_Target
     {
         UNITY_SETUP_INSTANCE_ID(input);
         UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
@@ -98,21 +98,21 @@ Shader "Custom/Outline"
         return baseColor * (1 - outlineColor.a) + outlineColor.a * outlineColor;
     }
 
-        ENDHLSL
-        SubShader
+    ENDHLSL
+    SubShader
     {
         Cull Off
-            ZWrite Off
-            ZTest Always
-            Tags
+        ZWrite Off
+        ZTest Always
+        Tags
         {
             "RenderType" = "Opaque"
             "RenderPipeline" = "UniversalPipeline"
             "UniversalMaterialType" = "Unlit"
             "IgnoreProjector" = "True"
         }
-            LOD 100
-            Pass
+        LOD 100
+        Pass
         {
             Name "Pure Unlit"
             Tags { "LightMode" = "UniversalForward" }
@@ -121,7 +121,7 @@ Shader "Custom/Outline"
             #pragma fragment frag
             ENDHLSL
         }
-            Pass
+        Pass
         {
             Name "Hard Unlit"
             HLSLPROGRAM
@@ -129,7 +129,7 @@ Shader "Custom/Outline"
             #pragma fragment fragHard
             ENDHLSL
         }
-            Pass
+        Pass
         {
             Name "Final Unlit"
             HLSLPROGRAM

@@ -13,17 +13,19 @@ public class RayMarchingFeature : ScriptableRendererFeature
         public Shader shader = null;
     }
     public Settings settings;
+    RenderTargetHandle m_CameraColorAttachment;
     RayMarchingPass pass;
     public override void AddRenderPasses( ScriptableRenderer renderer, ref RenderingData renderingData)
     {
         settings.mat = new Material(settings.shader);
         settings.mat.hideFlags = HideFlags.DontSave;
-        pass.SetUp(settings,"RayMarching", renderer.cameraColorTarget,RenderTargetHandle.CameraTarget);
+        pass.SetUp(settings,"RayMarching", renderer.cameraColorTarget, m_CameraColorAttachment);
         renderer.EnqueuePass(pass);
     }
 
     public override void Create()
     {
         pass = new RayMarchingPass();
+        m_CameraColorAttachment.Init("_CameraColorTexture");
     }
 }

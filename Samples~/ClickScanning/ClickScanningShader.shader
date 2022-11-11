@@ -1,5 +1,10 @@
 Shader "Custom/ClickScanning"
 {
+    Properties
+    {
+        _MainTex("_MainTex", 2D) = "white" {}
+    }
+
     HLSLINCLUDE
 
     #pragma exclude_renderers gles gles3 glcore
@@ -15,13 +20,13 @@ Shader "Custom/ClickScanning"
     #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
     #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareNormalsTexture.hlsl"
 
-    TEXTURE2D(_SourceTex);
-    SAMPLER(sampler_SourceTex);
+    TEXTURE2D(_MainTex);
+    SAMPLER(sampler_MainTex);
     float4x4 _Ray;
 
     CBUFFER_START(UnityPerMaterial)
-    float4 _SourceTex_TexelSize;
-    float4 _SourceTex_ST;
+    float4 _MainTex_TexelSize;
+    float4 _MainTex_ST;
     float3 _ClickPos;
     float _Width;
     float _Speed;
@@ -59,7 +64,7 @@ Shader "Custom/ClickScanning"
             index = 3;
         }
 #if UNITY_UV_STARTS_AT_TOP
-        if (_SourceTex_TexelSize.y < 0)
+        if (_MainTex_TexelSize.y < 0)
             index = 3 - index;
 #endif
         return index;
@@ -93,7 +98,7 @@ Shader "Custom/ClickScanning"
 
         VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
         output.vertex = vertexInput.positionCS;
-        output.uv = TRANSFORM_TEX(input.texcoord, _SourceTex);
+        output.uv = TRANSFORM_TEX(input.texcoord, _MainTex);
 
         output.ray = _Ray[SetRay(output.uv)];
         return output;
@@ -119,7 +124,7 @@ Shader "Custom/ClickScanning"
         //half4 scan = frac(saturate(x - y));
         half4 scan = pow(frac(saturate((x - y) / _Width)), _Focus);
 
-        half4 baseColor = SAMPLE_TEXTURE2D(_SourceTex, sampler_SourceTex, uv);
+        half4 baseColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv);
 
         return scan *_ScanColor * dc + baseColor*(1-scan*dc);
         //return scan;

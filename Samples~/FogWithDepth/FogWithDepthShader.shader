@@ -1,5 +1,9 @@
 Shader "Custom/FogWithDepth"
 {
+    Properties
+    {
+        _MainTex("_MainTex", 2D) = "white" {}
+    }
     HLSLINCLUDE
 
     #pragma multi_compile_instancing

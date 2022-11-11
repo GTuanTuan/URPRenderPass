@@ -1,6 +1,9 @@
 Shader "Custom/CircleGlow"
 {
-
+    Properties
+    {
+        _MainTex("_MainTex", 2D) = "white" {}
+    }
     HLSLINCLUDE
 
     #pragma exclude_renderers gles gles3 glcore
@@ -14,10 +17,10 @@ Shader "Custom/CircleGlow"
     #include "Packages/com.unity.render-pipelines.universal/Shaders/PostProcessing/Common.hlsl"
     #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
 
-    TEXTURE2D(_SourceTex);
-    SAMPLER(sampler_SourceTex);
-    float4 _SourceTex_TexelSize;
-    float4 _SourceTex_ST;
+    TEXTURE2D(_MainTex);
+    SAMPLER(sampler_MainTex);
+    float4 _MainTex_TexelSize;
+    float4 _MainTex_ST;
     float _RCount;
     float _Radius;
     float _CCount;
@@ -79,7 +82,7 @@ Shader "Custom/CircleGlow"
 
         VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
         output.vertex = vertexInput.positionCS;
-        output.uv = TRANSFORM_TEX(input.texcoord, _SourceTex);
+        output.uv = TRANSFORM_TEX(input.texcoord, _MainTex);
          
         return output;
     }
@@ -90,7 +93,7 @@ Shader "Custom/CircleGlow"
         UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
         float2 uv = UnityStereoTransformScreenSpaceTex(input.uv);
-        half4 baseColor = SAMPLE_TEXTURE2D(_SourceTex, sampler_SourceTex, uv);
+        half4 baseColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv);
 
         half4 bgColor = lerp(half4(0.3, 0.1, 0.3, 1), half4(0.1, 0.4, 0.5, 1), uv.y);
 
