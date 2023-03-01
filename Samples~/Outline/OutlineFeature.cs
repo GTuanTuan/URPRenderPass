@@ -16,6 +16,7 @@ public class OutlineFeature : ScriptableRendererFeature
     OutlinePass pass;
     public override void AddRenderPasses( ScriptableRenderer renderer, ref RenderingData renderingData)
     {
+        if (settings.shader == null) return;
         settings.mat = new Material(settings.shader);
         settings.mat.hideFlags = HideFlags.DontSave;
         pass.SetUp(settings,"Outline", renderer.cameraColorTarget);
@@ -24,6 +25,7 @@ public class OutlineFeature : ScriptableRendererFeature
 
     public override void Create()
     {
+        if (settings.shader == null) return;
         pass = new OutlinePass();
     }
 }

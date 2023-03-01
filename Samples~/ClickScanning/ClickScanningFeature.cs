@@ -17,6 +17,7 @@ public class ClickScanningFeature : ScriptableRendererFeature
     ClickScanningPass pass;
     public override void AddRenderPasses( ScriptableRenderer renderer, ref RenderingData renderingData)
     {
+        if (settings.shader == null) return;
         settings.mat = new Material(settings.shader);
         settings.mat.hideFlags = HideFlags.DontSave;
         pass.SetUp(settings,"ClickScanning", renderer.cameraColorTarget, m_CameraColorAttachment);
@@ -25,7 +26,8 @@ public class ClickScanningFeature : ScriptableRendererFeature
 
     public override void Create()
     {
+        if (settings.shader == null) return;
         pass = new ClickScanningPass();
-        m_CameraColorAttachment.Init("_CameraColorTexture");
+        m_CameraColorAttachment.Init("_CameraColorAttachmentA");
     }
 }
